@@ -1,0 +1,6 @@
+.idea/
+.vscode/
+.gradio/
+.tmp/
+*.pyc
+.venv

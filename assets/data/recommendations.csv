@@ -1,0 +1,7 @@
+Type,Topic,Example,Expected reduction
+General,⚡ Use the right quantization,"On llamacpp, using q4ks instead of no quantization can lead to a reduction of impact by",33%
+General,⚡ Use the right framework !,"Using the framework vllm instead of llamacpp for some model can lead to a reduction of impact by",18%
+General,⚡ Use the lightest possible model that meets your needs !,"Using the model llama3-8b instead of 13b can lead to a reduction of impact by",30%
+General,🌫️ Locate servers in a country where energy production has less impact, "Using a server located in Sweden instead of United-States can lead to a reduction of impact by",93%
+General, 🌫️⛏️💧 Use as few resources as possible (i.e. the smallest possible machine/server) to suit the need,"Using a small gpu server instead of a big one can lead to a reduction of impact by",45%
+Specific,⚡ Use the most frugal configuration,"Compare with the most frugal configuration: the model X-Y with Z framework",X%
