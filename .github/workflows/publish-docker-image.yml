@@ -2,7 +2,7 @@ name: Build and/or publish Docker image to Dockerhub
 
 on:
   push:
-    branches: ["main", "intialization_repo"] # Ajouter temporairement votre branche
+    branches: ["main"]
     tags: ["[0-9]+.[0-9]+.[0-9]+"]
   pull_request:
 
@@ -55,7 +55,6 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
             type=raw,value=latest,enable={{is_default_branch}}
-            type=raw,value=test,enable=${{ github.ref_name == 'intialization_repo' }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
