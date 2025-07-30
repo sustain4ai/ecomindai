@@ -36,7 +36,7 @@
   /* Suppression des bordures des composants */
   --block-border-width: 0;
 
-  --font: Lexend, "Segoe UI", "sans-serif";
+  --font: Lexend, "Segoe UI";
 }
 
 /* Liseré en haut de la page */

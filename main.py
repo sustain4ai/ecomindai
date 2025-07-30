@@ -9,8 +9,8 @@ print("Launching EcoMindAI v2 application")
 
 app = FastAPI()
 app.include_router(aiImpacts.router)
-app = gr.mount_gradio_app(app, io, path="/")
+app = gr.mount_gradio_app(app, io, path="")
 
-host = os.environ.get("ECOMINDAI_SERVER_HOST", "0.0.0.0")
+host = os.environ.get("ECOMINDAI_SERVER_HOST", "127.0.0.1")
 port = int(os.environ.get("ECOMINDAI_SERVER_PORT", "8000"))
 uvicorn.run(app, host=host, port=port)
