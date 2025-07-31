@@ -296,7 +296,7 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                 abiotic_resource_usage = gr.Text(label="⛏️ Abiotic resource use", value="X gSbeq",
                                                  elem_classes="result")
                 water_usage = gr.Text(
-                    label="💧 Water usage", value="X mL", elem_classes="result")
+                    label="💧 Water usage *", value="X mL", elem_classes="result")
             with gr.Row():
                 gr.Markdown("↕", elem_classes="equiv")
                 gr.Markdown("↕", elem_classes="equiv")
@@ -313,6 +313,8 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                 eq_water_usage = gr.Text(
                     label="Water usage", value="X", elem_classes="result")
 
+            gr.Markdown(
+                "\* the water usage is calculated only for the scope 3 because of the lack of open data about the water usage related to energy consumption", elem_classes="asterisk")
             gr.Markdown(
                 "### Visualize the proportion of use and manufacturing impacts")
             with gr.Row():
