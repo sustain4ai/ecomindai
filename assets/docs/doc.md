@@ -26,8 +26,6 @@ their AI, identify relevant best practices to reduce this impact and follow it o
 the project. It is important to question the frugality of AI at every stage of the project: from its
 conception to its development and deployment, and that's why this prototype is aimed at a wide
 audience.
-It will also make **any other collaborator** aware of the environmental impact of their use of AI
-through famous chatbots using Ecologits.
 
 ## Why do we need prediction?
 

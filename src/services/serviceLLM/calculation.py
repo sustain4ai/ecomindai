@@ -169,7 +169,7 @@ def generate_indicator_summary_fig(criteria, usage_impact, embodied_impact):
     """
 
     title = "Titre du graphique"
-    indicator_labels = ["Use (scope 2)", "Manufacturing\n(scope 3)"]
+    indicator_labels = ["Use (scope 2)", "Embodied\n(scope 3)"]
     match criteria:
         case "carbon_footprint":
             title = "Carbon footprint : " + \

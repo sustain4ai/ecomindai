@@ -15,8 +15,8 @@ csv_path = path.join(path.dirname(__file__), "../../assets/data/")
 # Point d'entrée de l'application
 with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                analytics_enabled=False) as io:
-    title = gr.HTML("""<h1 class=\"logo\">EcoMindAI v2 - Prototype 🚧</h1>
-        <p>Estimating the environmental impact of an AI project or the impact of a collaborator's professional use of AI</p>""")
+    title = gr.HTML("""<h1 class=\"logo\">EcoMindAI</h1>
+        <p>Estimating the environmental impact of an language model project </p>""")
 
     with gr.Tabs() as tabs:
 
@@ -26,14 +26,14 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                 with gr.Column(scale=2):
                     gr.Markdown("## 📝 Input parameters")
                 launch_btn = gr.Button("⯈ Launch impact estimation",
-                                       variant="primary", scale=1, interactive=False)
+                                       variant="primary", scale=1, interactive=True)
 
             # Choix du mode
             mode = gr.Radio(
-                ["Project's impact", "Single collaborator's impact"], label="Mode")
+                ["Project's impact"], label="Mode", value="Project's impact")
 
             # Mode "impact projet"
-            with gr.Column(visible=False) as project_impact:
+            with gr.Column(visible=True) as project_impact:
                 gr.HTML("<hr>", padding=False)
                 project_duration = gr.Number(value=5, label="Estimated project duration (in years)",
                                              minimum=1, maximum=50)
@@ -262,22 +262,6 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                         location_df["location"].tolist())),
                         value="Germany")
 
-            # Mode "impact individuel"
-            with gr.Column(visible=False) as single_impact:
-                gr.HTML("<hr>", padding=False)
-                gr.HTML(
-                    """<div class=\"not-implemented\">🏗️ Not implemented yet</div>
-                        <p class=\"not-implemented\">Estimate the environmental impact linked to your professional use of AI in your daily life, in order to become aware of your own impact and reason your use of AI.
-                         We need more data to be able to estimate the impact of your favorite tools: copilot 365, github copilot, IAKA, MAIA/CEDric, nAIxus …</p>""")
-
-            # Gestion de l'affichage du formulaire associé au mode sélectionné
-            def show_input_parameters(selected_mode):
-                return gr.update(visible=(selected_mode == "Project's impact")), gr.update(
-                    visible=(selected_mode == "Single collaborator's impact"))
-
-            mode.change(show_input_parameters, inputs=mode,
-                        outputs=[project_impact, single_impact])
-
         # Onglet des résultats
         with gr.Tab("📊 Results", id=1, visible=False, elem_classes="page") as results:
 
@@ -287,7 +271,7 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                                             label='Choose the duration for which you want to visualize your impact', elem_classes="slider")
 
             gr.Markdown("### Environmental impact "
-                        "<small>(for both stages use and manufacturing)</small>")
+                        "<small>(for both stages use and embodied)</small>")
             with gr.Row():
                 energy_consumption = gr.Text(label="⚡ Energy consumption", value="X Wh",
                                              elem_classes="result")
@@ -316,7 +300,7 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
             gr.Markdown(
                 "\* the water usage is calculated only for the scope 3 because of the lack of open data about the water usage related to energy consumption", elem_classes="asterisk")
             gr.Markdown(
-                "### Visualize the proportion of use and manufacturing impacts")
+                "### Visualize the proportion of use and embodied impacts")
             with gr.Row():
                 carbon_footprint_chart = gr.Plot(
                     show_label=False, container=False)
