@@ -172,13 +172,13 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                 with gr.Column() as infra_dedicated:
                     with gr.Row():
                         infra_cpu_cores = gr.Number(label="CPU cores", minimum=0, maximum=1024,
-                                                    value=30)
+                                                    value=30, interactive=False, elem_classes="show-disabled")
                         infra_gpu_count = gr.Number(label="GPU count", minimum=0, maximum=1024,
-                                                    value=2)
+                                                    value=2, interactive=False, elem_classes="show-disabled")
                         infra_gpu_memory = gr.Number(label="GPU memory (GB)", minimum=0,
-                                                     maximum=2048, value=32)
+                                                     maximum=2048, value=32, interactive=False, elem_classes="show-disabled")
                         infra_memory = gr.Number(label="RAM size (GB)", minimum=1, maximum=2048,
-                                                 value=64)
+                                                 value=64, interactive=False, elem_classes="show-disabled")
                     gr.Markdown("#### Power effectiveness")
                     with gr.Row():
                         infra_pue_datacenter = gr.Number(label="Datacenter PUE", minimum=1,
