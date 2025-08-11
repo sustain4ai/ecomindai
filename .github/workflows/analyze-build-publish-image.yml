@@ -12,6 +12,8 @@ jobs:
   # Job to test the build on the PR (without publishing any image)
   test-build:
     if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
