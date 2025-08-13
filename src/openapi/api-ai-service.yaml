@@ -1,356 +1,356 @@
 openapi: 3.0.0
 info:
-  title: FastAPI
-  version: 0.1.0
+    title: FastAPI
+    version: 0.1.0
 paths:
-  /ai_types:
-    get:
-      summary: Get Ai Types
-      description: Récupère les types d'IA pour lesquels EcoMindAI peut faire des estimations
-      operationId: get_ai_types_ai_types_get
-      responses:
-        "200":
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                items:
-                  type: string
-                type: array
-                title: Response Get Ai Types Ai Types Get
-  /llm_configurations:
-    get:
-      summary: Get Llm Configurations
-      description: Récupère les configurations disponibles pour un modèle de type LLM
-      operationId: get_llm_configurations_llm_configurations_get
-      responses:
-        "200":
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: "#/components/schemas/LLMModelConfig"
-                type: array
-                title: Response Get Llm Configurations Llm Configurations Get
-  /ml_configurations:
-    get:
-      summary: Get Ml Configurations
-      description: Récupère les algorithmes disponibles pour un modèle d'IA de machine learning classique de regression ou classification
-      operationId: get_ml_configurations_ml_configurations_get
-      parameters:
-        - name: ml_type
-          in: query
-          required: true
-          schema:
-            $ref: "#/components/schemas/MLType"
-      responses:
-        "200":
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/MLModelConfig"
-                title: Response Get Ml Configurations Ml Configurations Get
-        "422":
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/HTTPValidationError"
-  /estimate_llm_inference:
-    post:
-      summary: Launchestimation
-      description: Lance un calcul d'estimation des métriques d'impacts environnementaux d'un projet LLM sur sa phase d'inférence sur 1 an
-      operationId: launchEstimation_estimate_llm_inference_post
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/InputEstimationLLMInference"
-        required: true
-      responses:
-        "200":
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/OutputEstimation"
-        "422":
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/HTTPValidationError"
-  /estimate_ml:
-    post:
-      summary: Launchestimation
-      description: Lance un calcul d'estimation des métriques d'impacts environnementaux d'un projet ML classique sur 1 an
-      operationId: launchEstimation_estimate_ml_post
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/InputEstimationML"
-        required: true
-      responses:
-        "200":
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/OutputEstimation"
-        "422":
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/HTTPValidationError"
+    /ai_types:
+        get:
+            summary: Get Ai Types
+            description: Récupère les types d'IA pour lesquels EcoMindAI peut faire des estimations
+            operationId: get_ai_types_ai_types_get
+            responses:
+                "200":
+                    description: Successful Response
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    type: string
+                                type: array
+                                title: Response Get Ai Types Ai Types Get
+    /llm_configurations:
+        get:
+            summary: Get Llm Configurations
+            description: Récupère les configurations disponibles pour un modèle de type LLM
+            operationId: get_llm_configurations_llm_configurations_get
+            responses:
+                "200":
+                    description: Successful Response
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/LLMModelConfig"
+                                type: array
+                                title: Response Get Llm Configurations Llm Configurations Get
+    /ml_configurations:
+        get:
+            summary: Get Ml Configurations
+            description: Récupère les algorithmes disponibles pour un modèle d'IA de machine learning classique de regression ou classification
+            operationId: get_ml_configurations_ml_configurations_get
+            parameters:
+                - name: ml_type
+                  in: query
+                  required: true
+                  schema:
+                      $ref: "#/components/schemas/MLType"
+            responses:
+                "200":
+                    description: Successful Response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/MLModelConfig"
+                                title: Response Get Ml Configurations Ml Configurations Get
+                "422":
+                    description: Validation Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/HTTPValidationError"
+    /estimate_llm_inference:
+        post:
+            summary: Launchestimation
+            description: Lance un calcul d'estimation des métriques d'impacts environnementaux d'un projet LLM sur sa phase d'inférence sur 1 an
+            operationId: launchEstimation_estimate_llm_inference_post
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/InputEstimationLLMInference"
+                required: true
+            responses:
+                "200":
+                    description: Successful Response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OutputEstimation"
+                "422":
+                    description: Validation Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/HTTPValidationError"
+    /estimate_ml:
+        post:
+            summary: Launchestimation
+            description: Lance un calcul d'estimation des métriques d'impacts environnementaux d'un projet ML classique sur 1 an
+            operationId: launchEstimation_estimate_ml_post
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/InputEstimationML"
+                required: true
+            responses:
+                "200":
+                    description: Successful Response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/OutputEstimation"
+                "422":
+                    description: Validation Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/HTTPValidationError"
 components:
-  schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: "#/components/schemas/ValidationError"
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    InfrastructureType:
-      type: string
-      enum:
-        - SERVER_DC
-        - LAPTOP
-        - DESKTOP
-      title: InfrastructureType
-    InputEstimationLLMInference:
-      properties:
-        modelName:
-          type: string
-          title: Modelname
-          description: Nom du modèle LLM
-        nbParameters:
-          type: string
-          title: Nbparameters
-          description: Nombre de paramètres (en milliards)
-        framework:
-          type: string
-          title: Framework
-          description: Nom du modèle utilisé
-        quantization:
-          type: string
-          title: Quantization
-          description: Méthode de quantization utilisée (none si pas de quantization)
-        totalGeneratedTokens:
-          type: integer
-          title: Totalgeneratedtokens
-          description: Nombre de tokens générés sur un an
-        infrastructureType:
-          $ref: "#/components/schemas/InfrastructureType"
-          description: Type d'infrastructure utilisée
-        nbCpuCores:
-          type: integer
-          title: Nbcpucores
-          description: Nombre de coeurs de CPU
-        nbGpu:
-          type: integer
-          title: Nbgpu
-          description: Nombre de GPUs
-        gpuMemory:
-          type: integer
-          title: Gpumemory
-          description: Taille de la mémoire GPU en Go
-        ramSize:
-          type: integer
-          title: Ramsize
-          description: Taille de la RAM en Go
-      type: object
-      required:
-        - modelName
-        - nbParameters
-        - framework
-        - quantization
-        - totalGeneratedTokens
-        - infrastructureType
-        - nbCpuCores
-        - nbGpu
-        - gpuMemory
-        - ramSize
-      title: InputEstimationLLMInference
-      description: Données d'entrée du calcul d'estimation de l'impact d'un LLM pour la phase d'inférence
-    InputEstimationML:
-      properties:
-        stage:
-          type: string
-          title: Stage
-          description: Etape du cycle de vie de l'IA (entrainement ou inférence ?)
-        algorithmType:
-          type: string
-          title: Algorithmtype
-          description: Type d'algorithme (classification ou regression)'
-        algorithmName:
-          type: string
-          title: Algorithmname
-          description: Nom de l'algorithme
-        nbFeatures:
-          type: string
-          title: Nbfeatures
-          description: Nombre de features (de colonnes dans le dataset)
-        nbLines:
-          type: string
-          title: Nblines
-          description: Nombre de lignes dans le dataset correspondant à la stage
-        nbOperations:
-          type: integer
-          title: Nboperations
-          description: Nombre d'opérations (d'inférences ou de trainings selon le stage)
-        infrastructureType:
-          $ref: "#/components/schemas/InfrastructureType"
-          description: Type d'infrastructure utilisée
-        nbCpuCores:
-          type: integer
-          title: Nbcpucores
-          description: Nombre de coeurs de CPU
-        nbGpu:
-          type: integer
-          title: Nbgpu
-          description: Nombre de GPUs
-        gpuMemory:
-          type: integer
-          title: Gpumemory
-          description: Taille de la mémoire GPU en Go
-        ramSize:
-          type: integer
-          title: Ramsize
-          description: Taille de la RAM en Go
-      type: object
-      required:
-        - stage
-        - algorithmType
-        - algorithmName
-        - nbFeatures
-        - nbLines
-        - nbOperations
-        - infrastructureType
-        - nbCpuCores
-        - nbGpu
-        - gpuMemory
-        - ramSize
-      title: InputEstimationML
-      description: Données d'entrée du calcul d'estimation de l'impact d'un LLM pour la phase d'inférence
-    LLMModelConfig:
-      properties:
-        modelName:
-          type: string
-          title: Modelname
-          description: Nom du modèle LLM utilisé
-        nbParameters:
-          type: string
-          title: Nbparameters
-          description: Nombre de paramètres (en milliards)
-        framework:
-          type: string
-          title: Framework
-          description: Nom du modèle utilisé
-        quantization:
-          type: string
-          title: Quantization
-          description: Méthode de quantization utilisée (none si pas de quantization)
-      type: object
-      required:
-        - modelName
-        - nbParameters
-        - framework
-        - quantization
-      title: LLMModelConfig
-      description: Configuration de LLM disponibles dans la base
-    MLModelConfig:
-      properties:
-        algorithm_name:
-          type: string
-          title: Algorithm Name
-          description: Nom de l'algorithme de machine learning utilisé
-      type: object
-      required:
-        - algorithm_name
-      title: MLModelConfig
-      description: Configuration des modèles de machine learning disponibles dans la base
-    MLType:
-      type: string
-      enum:
-        - classification
-        - regression
-      title: MLType
-    OutputEstimation:
-      properties:
-        electricityConsumption:
-          type: number
-          title: Electricityconsumption
-          description: Consommation électrique totale (Wh)
-        runtime:
-          type: number
-          title: Runtime
-          description: Durée d'exécution totale (s)
-        recommendations:
-          items:
-            $ref: "#/components/schemas/Recommendation"
-          type: array
-          title: Recommendations
-          description: Liste des recommandations pour réduire l'impact
-      type: object
-      required:
-        - electricityConsumption
-        - runtime
-        - recommendations
-      title: OutputEstimation
-      description: "Données de sortie du calcul d'estimation de l'impact : electricité consommée, temps + recommandations"
-    Recommendation:
-      properties:
-        type:
-          type: string
-          title: Type
-          description: "Type de recommandation: General ou Specific"
-        topic:
-          type: string
-          title: Topic
-          description: Titre de la recommandation
-        example:
-          type: string
-          title: Example
-          description: Détail et exemple de la recommandation
-        expectedReduction:
-          type: string
-          title: Expectedreduction
-          description: Pourcentage de réduction attendu
-      type: object
-      required:
-        - type
-        - topic
-        - example
-        - expectedReduction
-      title: Recommendation
-      description: "Recommandations personalisées sur comment s'améliorer, en fonction des données d'entrées "
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-              - type: string
-              - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-        - loc
-        - msg
-        - type
-      title: ValidationError
+    schemas:
+        HTTPValidationError:
+            properties:
+                detail:
+                    items:
+                        $ref: "#/components/schemas/ValidationError"
+                    type: array
+                    title: Detail
+            type: object
+            title: HTTPValidationError
+        InfrastructureType:
+            type: string
+            enum:
+                - SERVER_DC
+                - LAPTOP
+                - DESKTOP
+            title: InfrastructureType
+        InputEstimationLLMInference:
+            properties:
+                modelName:
+                    type: string
+                    title: Modelname
+                    description: Nom du modèle LLM
+                nbParameters:
+                    type: string
+                    title: Nbparameters
+                    description: Nombre de paramètres (en milliards)
+                framework:
+                    type: string
+                    title: Framework
+                    description: Nom du modèle utilisé
+                quantization:
+                    type: string
+                    title: Quantization
+                    description: Méthode de quantization utilisée (none si pas de quantization)
+                totalGeneratedTokens:
+                    type: integer
+                    title: Totalgeneratedtokens
+                    description: Nombre de tokens générés sur un an
+                infrastructureType:
+                    $ref: "#/components/schemas/InfrastructureType"
+                    description: Type d'infrastructure utilisée
+                nbCpuCores:
+                    type: integer
+                    title: Nbcpucores
+                    description: Nombre de coeurs de CPU
+                nbGpu:
+                    type: integer
+                    title: Nbgpu
+                    description: Nombre de GPUs
+                gpuMemory:
+                    type: integer
+                    title: Gpumemory
+                    description: Taille de la mémoire GPU en Go
+                ramSize:
+                    type: integer
+                    title: Ramsize
+                    description: Taille de la RAM en Go
+            type: object
+            required:
+                - modelName
+                - nbParameters
+                - framework
+                - quantization
+                - totalGeneratedTokens
+                - infrastructureType
+                - nbCpuCores
+                - nbGpu
+                - gpuMemory
+                - ramSize
+            title: InputEstimationLLMInference
+            description: Données d'entrée du calcul d'estimation de l'impact d'un LLM pour la phase d'inférence
+        InputEstimationML:
+            properties:
+                stage:
+                    type: string
+                    title: Stage
+                    description: Etape du cycle de vie de l'IA (entrainement ou inférence ?)
+                algorithmType:
+                    type: string
+                    title: Algorithmtype
+                    description: Type d'algorithme (classification ou regression)'
+                algorithmName:
+                    type: string
+                    title: Algorithmname
+                    description: Nom de l'algorithme
+                nbFeatures:
+                    type: string
+                    title: Nbfeatures
+                    description: Nombre de features (de colonnes dans le dataset)
+                nbLines:
+                    type: string
+                    title: Nblines
+                    description: Nombre de lignes dans le dataset correspondant à la stage
+                nbOperations:
+                    type: integer
+                    title: Nboperations
+                    description: Nombre d'opérations (d'inférences ou de trainings selon le stage)
+                infrastructureType:
+                    $ref: "#/components/schemas/InfrastructureType"
+                    description: Type d'infrastructure utilisée
+                nbCpuCores:
+                    type: integer
+                    title: Nbcpucores
+                    description: Nombre de coeurs de CPU
+                nbGpu:
+                    type: integer
+                    title: Nbgpu
+                    description: Nombre de GPUs
+                gpuMemory:
+                    type: integer
+                    title: Gpumemory
+                    description: Taille de la mémoire GPU en Go
+                ramSize:
+                    type: integer
+                    title: Ramsize
+                    description: Taille de la RAM en Go
+            type: object
+            required:
+                - stage
+                - algorithmType
+                - algorithmName
+                - nbFeatures
+                - nbLines
+                - nbOperations
+                - infrastructureType
+                - nbCpuCores
+                - nbGpu
+                - gpuMemory
+                - ramSize
+            title: InputEstimationML
+            description: Données d'entrée du calcul d'estimation de l'impact d'un LLM pour la phase d'inférence
+        LLMModelConfig:
+            properties:
+                modelName:
+                    type: string
+                    title: Modelname
+                    description: Nom du modèle LLM utilisé
+                nbParameters:
+                    type: string
+                    title: Nbparameters
+                    description: Nombre de paramètres (en milliards)
+                framework:
+                    type: string
+                    title: Framework
+                    description: Nom du modèle utilisé
+                quantization:
+                    type: string
+                    title: Quantization
+                    description: Méthode de quantization utilisée (none si pas de quantization)
+            type: object
+            required:
+                - modelName
+                - nbParameters
+                - framework
+                - quantization
+            title: LLMModelConfig
+            description: Configuration de LLM disponibles dans la base
+        MLModelConfig:
+            properties:
+                algorithm_name:
+                    type: string
+                    title: Algorithm Name
+                    description: Nom de l'algorithme de machine learning utilisé
+            type: object
+            required:
+                - algorithm_name
+            title: MLModelConfig
+            description: Configuration des modèles de machine learning disponibles dans la base
+        MLType:
+            type: string
+            enum:
+                - classification
+                - regression
+            title: MLType
+        OutputEstimation:
+            properties:
+                electricityConsumption:
+                    type: number
+                    title: Electricityconsumption
+                    description: Consommation électrique totale (Wh)
+                runtime:
+                    type: number
+                    title: Runtime
+                    description: Durée d'exécution totale (s)
+                recommendations:
+                    items:
+                        $ref: "#/components/schemas/Recommendation"
+                    type: array
+                    title: Recommendations
+                    description: Liste des recommandations pour réduire l'impact
+            type: object
+            required:
+                - electricityConsumption
+                - runtime
+                - recommendations
+            title: OutputEstimation
+            description: "Données de sortie du calcul d'estimation de l'impact : electricité consommée, temps + recommandations"
+        Recommendation:
+            properties:
+                type:
+                    type: string
+                    title: Type
+                    description: "Type de recommandation: General ou Specific"
+                topic:
+                    type: string
+                    title: Topic
+                    description: Titre de la recommandation
+                example:
+                    type: string
+                    title: Example
+                    description: Détail et exemple de la recommandation
+                expectedReduction:
+                    type: string
+                    title: Expectedreduction
+                    description: Pourcentage de réduction attendu
+            type: object
+            required:
+                - type
+                - topic
+                - example
+                - expectedReduction
+            title: Recommendation
+            description: "Recommandations personalisées sur comment s'améliorer, en fonction des données d'entrées "
+        ValidationError:
+            properties:
+                loc:
+                    items:
+                        anyOf:
+                            - type: string
+                            - type: integer
+                    type: array
+                    title: Location
+                msg:
+                    type: string
+                    title: Message
+                type:
+                    type: string
+                    title: Error Type
+            type: object
+            required:
+                - loc
+                - msg
+                - type
+            title: ValidationError

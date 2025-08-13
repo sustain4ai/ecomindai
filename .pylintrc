@@ -1,0 +1,16 @@
+[MASTER]
+init-hook='import sys; sys.path.append("c:/Users/soury/Documents/Raise-lab/ecomindai_github/ecomindai/src")'
+
+# Modules à ignorer pour les erreurs d'import
+extension-pkg-whitelist=gradio,fastapi,uvicorn,matplotlib
+
+[MESSAGES CONTROL]
+# Désactiver seulement les erreurs d'import pour des modules externes
+disable=import-error
+
+# Ignorer les erreurs d'import pour des modules spécifiques
+ignored-modules=gradio,
+                fastapi,
+                uvicorn,
+                matplotlib,
+                pydantic

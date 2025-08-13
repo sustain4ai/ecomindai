@@ -1,3 +1,8 @@
+"""
+Fonctions génériques pour gérer les unités et ordre de grandeur
+"""
+
+
 def humanize_energy_consumption_units(value):
     """
     Convertit une valeur avec la meilleure unité de consommation énergétique appropriée
@@ -34,7 +39,8 @@ def humanize_units(value, units):
     :return: concaténation de la valeur ramené à la meilleure unité lisible et de cette unité
     """
     factor = 1000
-    # lors des calculs, les valeurs sont dans leur unité par défaut (kWh, kg ou L), on les remet dans la plus petite unité pour vérifier l'unité la plus adaptée
+    # lors des calculs, les valeurs sont dans leur unité par défaut (kWh, kg ou L),
+    # on les remet dans la plus petite unité pour vérifier l'unité la plus adaptée
     value = value * factor
     unit_index = 0
 

@@ -157,8 +157,8 @@ To compute the multicriteria impacts, we used 2 databases :
 - Base Empreinte Numérique v2.0 for the embodied impacts of the physical equipments
 - Base Impact for the electricty mix depending on the country where the energy was consumed
 
-We have separated the impacts between 2 phases of the material equipment life cycle: 
-- the use phase (which is equivalent to scope 2 when we talk about carbon), these are the impacts related to the energy consumption of the equipments during their usage 
+We have separated the impacts between 2 phases of the material equipment life cycle:
+- the use phase (which is equivalent to scope 2 when we talk about carbon), these are the impacts related to the energy consumption of the equipments during their usage
 - the embodied phase which combines the other phases: manufacture, distribution and end of life (which is equivalent to scope 3)
 
 ## Limits

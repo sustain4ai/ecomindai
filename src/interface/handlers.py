@@ -3,12 +3,12 @@ from src.services.serviceLLM.calculation import calculate_impact_llm
 from src.dto.InputData import InputData
 
 
-def handle_launch(mode, project_duration, duration_slider, model_details, parameters_count, framework,
-                  quantization, stages, inference_users, inference_requests,
-                  inference_tokens, finetuning_data_size, finetuning_epochs_number,
-                  finetuning_batch_size, finetuning_peft,
-                  infra_type, infra_cpu_cores, infra_gpu_count, infra_gpu_memory,
-                  infra_memory, infra_pue_datacenter, infra_pue_machine, location):
+def handle_launch(
+        mode, project_duration, duration_slider, model_details, parameters_count, framework,
+        quantization, stages, inference_users, inference_requests, inference_tokens,
+        finetuning_data_size, finetuning_epochs_number, finetuning_batch_size, finetuning_peft,
+        infra_type, infra_cpu_cores, infra_gpu_count, infra_gpu_memory, infra_memory,
+        infra_pue_datacenter, infra_pue_machine, location):
     """
     Lance le calcul d'impact environnemental à partir des paramètres fournis
     et affiche les résultats sur l'interface.

@@ -125,27 +125,30 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                     gr.Markdown("#### Inference")
                     with gr.Column():
                         with gr.Row():
-                            inference_users = gr.Number(label="Number of users per year", minimum=1,
-                                                        maximum=1000000000, value=10000, elem_classes="inference")
-                            inference_requests = gr.Number(label="Average number of requests per year",
-                                                           minimum=1, maximum=1000000000, value=200, elem_classes="inference")
+                            inference_users = gr.Number(
+                                label="Number of users per year", minimum=1, maximum=1000000000,
+                                value=10000, elem_classes="inference")
+                            inference_requests = gr.Number(
+                                label="Average number of requests per year", minimum=1,
+                                maximum=1000000000, value=200, elem_classes="inference")
                             inference_tokens = gr.Number(
                                 label="Average number of tokens generated per request",
                                 minimum=1, maximum=1000000000, value=500, elem_classes="inference"
                             )
                             inference_total_tokens_str = gr.Text(
-                                label="⤇ Total number of generated tokens", value="5.0G", interactive=False, elem_classes="inference"
-                            )
+                                label="⤇ Total number of generated tokens", value="5.0G",
+                                interactive=False, elem_classes="inference")
                 with gr.Column(visible=False, elem_classes="wip") as finetuning_stage:
                     gr.Markdown(
                         """#### 🏗️ Finetuning WIP: it will not be taken into account in your estimation
                         We will need more data to factor it into the estimate""")
                     with gr.Row():
                         finetuning_type = gr.Radio(
-                            ["supervised finetuning", "RLHF"], label="Type of finetuning", interactive=False)
-                        finetuning_data_size = gr.Number(label="Size of the new dataset (in GB)",
-                                                         minimum=1,
-                                                         maximum=1000000000, value=500, interactive=False)
+                            ["supervised finetuning", "RLHF"],
+                            label="Type of finetuning", interactive=False)
+                        finetuning_data_size = gr.Number(
+                            label="Size of the new dataset (in GB)", minimum=1, maximum=1000000000,
+                            value=500, interactive=False)
                         finetuning_epochs_number = gr.Number(label="Number of epochs",
                                                              minimum=1, maximum=1000000000,
                                                              value=12, interactive=False)
@@ -171,28 +174,33 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                                                       "AI Cloud Service"])
                 with gr.Column() as infra_dedicated:
                     with gr.Row():
-                        infra_cpu_cores = gr.Number(label="CPU cores", minimum=0, maximum=1024,
-                                                    value=30, interactive=False, elem_classes="show-disabled")
-                        infra_gpu_count = gr.Number(label="GPU count", minimum=0, maximum=1024,
-                                                    value=2, interactive=False, elem_classes="show-disabled")
-                        infra_gpu_memory = gr.Number(label="GPU memory (GB)", minimum=0,
-                                                     maximum=2048, value=32, interactive=False, elem_classes="show-disabled")
-                        infra_memory = gr.Number(label="RAM size (GB)", minimum=1, maximum=2048,
-                                                 value=64, interactive=False, elem_classes="show-disabled")
+                        infra_cpu_cores = gr.Number(
+                            label="CPU cores", minimum=0, maximum=1024, value=30, interactive=False,
+                            elem_classes="show-disabled")
+                        infra_gpu_count = gr.Number(
+                            label="GPU count", minimum=0, maximum=1024, value=2, interactive=False,
+                            elem_classes="show-disabled")
+                        infra_gpu_memory = gr.Number(
+                            label="GPU memory (GB)", minimum=0, maximum=2048, value=32,
+                            interactive=False, elem_classes="show-disabled")
+                        infra_memory = gr.Number(
+                            label="RAM size (GB)", minimum=1, maximum=2048, value=64,
+                            interactive=False, elem_classes="show-disabled")
                     gr.Markdown("#### Power effectiveness")
                     with gr.Row():
-                        infra_pue_datacenter = gr.Number(label="Datacenter PUE", minimum=1,
-                                                         maximum=10, value=1.5, step=0.01,
-                                                         info="To learn more about the Power Usage Effectiveness and how it is calculated, check this page related to [PUE](https://en.wikipedia.org/wiki/Power_usage_effectiveness).",
-                                                         elem_classes="show-disabled")
-                        infra_pue_machine = gr.Number(label="Complementary PUE", minimum=1,
-                                                      maximum=10, value=1.3, step=0.01,
-                                                      info="Power used for the operating of OS, virtualization, control plan, idle... To learn more about it, visit our documentation page.", )
+                        infra_pue_datacenter = gr.Number(
+                            label="Datacenter PUE", minimum=1, maximum=10, value=1.5, step=0.01,
+                            info="To learn more about the Power Usage Effectiveness and how it is calculated, check this page related to [PUE](https://en.wikipedia.org/wiki/Power_usage_effectiveness).",
+                            elem_classes="show-disabled")
+                        infra_pue_machine = gr.Number(
+                            label="Complementary PUE", minimum=1, maximum=10, value=1.3, step=0.01,
+                            info="Power used for the operating of OS, virtualization, control plan, idle... To learn more about it, visit our documentation page.",)
                 with gr.Column(visible=False) as infra_service:
                     gr.HTML(
                         "<div class=\"not-implemented\">🏗️ Not implemented yet</div>")
 
-                def handle_inference_total_tokens(project_duration, inference_users, inference_requests, inference_tokens):
+                def handle_inference_total_tokens(
+                        project_duration, inference_users, inference_requests, inference_tokens):
                     total = project_duration*inference_users * \
                         inference_requests*inference_tokens
                     if (total > 1000000000):
@@ -205,14 +213,26 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                         total_str = str(total)
                     return gr.update(value=total_str)
 
-                project_duration.change(handle_inference_total_tokens, inputs=[project_duration, inference_users, inference_requests, inference_tokens],
-                                        outputs=inference_total_tokens_str)
-                inference_users.change(handle_inference_total_tokens, inputs=[project_duration, inference_users, inference_requests, inference_tokens],
-                                       outputs=inference_total_tokens_str)
-                inference_requests.change(handle_inference_total_tokens, inputs=[project_duration, inference_users, inference_requests, inference_tokens],
-                                          outputs=inference_total_tokens_str)
-                inference_tokens.change(handle_inference_total_tokens, inputs=[project_duration, inference_users, inference_requests, inference_tokens],
-                                        outputs=inference_total_tokens_str)
+                project_duration.change(
+                    handle_inference_total_tokens,
+                    inputs=[project_duration, inference_users, inference_requests,
+                            inference_tokens],
+                    outputs=inference_total_tokens_str)
+                inference_users.change(
+                    handle_inference_total_tokens,
+                    inputs=[project_duration, inference_users, inference_requests,
+                            inference_tokens],
+                    outputs=inference_total_tokens_str)
+                inference_requests.change(
+                    handle_inference_total_tokens,
+                    inputs=[project_duration, inference_users, inference_requests,
+                            inference_tokens],
+                    outputs=inference_total_tokens_str)
+                inference_tokens.change(
+                    handle_inference_total_tokens,
+                    inputs=[project_duration, inference_users, inference_requests,
+                            inference_tokens],
+                    outputs=inference_total_tokens_str)
 
                 def handle_infra_type(infra_type):
                     if infra_type == "AI Cloud Service":
@@ -239,8 +259,7 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
 
                 # peremttre d'appuyer sur le bouton uniquement quand les champs nécéssaires sont remplis
                 def enable_launch_button(infra_type, mode, selected_stages):
-                    if (
-                            infra_type != "AI Cloud Service" and mode == "Project's impact" and "Inference" in selected_stages):
+                    if (infra_type != "AI Cloud Service" and mode == "Project's impact" and "Inference" in selected_stages):
                         return gr.update(interactive=True)
                     else:
                         return gr.update(interactive=False)
@@ -267,8 +286,10 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
 
             with gr.Row(elem_classes="duration"):
                 results_title = gr.Markdown("## 📊 Results for X years")
-                duration_slider = gr.Slider(1, 5, value=3, step=1,
-                                            label='Choose the duration for which you want to visualize your impact', elem_classes="slider")
+                duration_slider = gr.Slider(
+                    1, 5, value=3, step=1,
+                    label='Choose the duration for which you want to visualize your impact',
+                    elem_classes="slider")
 
             gr.Markdown("### Environmental impact "
                         "<small>(for both stages use and embodied)</small>")
@@ -298,7 +319,8 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                     label="Water usage", value="X", elem_classes="result")
 
             gr.Markdown(
-                "\* the water usage is calculated only for the scope 3 because of the lack of open data about the water usage related to energy consumption", elem_classes="asterisk")
+                "\* the water usage is calculated only for the scope 3 because of the lack of open data about the water usage related to energy consumption",
+                elem_classes="asterisk")
             gr.Markdown(
                 "### Visualize the proportion of use and embodied impacts")
             with gr.Row():
@@ -325,7 +347,8 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                 gr.Markdown("⚡ Use the right quantization !",
                             elem_classes="reco")
                 gr.Markdown(
-                    """On llamacpp, using q4ks instead of no quantization can lead to a reduction of impact by""", elem_classes="reco")
+                    """On llamacpp, using q4ks instead of no quantization can lead to a reduction of impact by""",
+                    elem_classes="reco")
                 gr.Markdown("## 33%", elem_classes="reco")
 
                 gr.Markdown("Quantified", elem_classes="reco")
@@ -337,14 +360,17 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
 
                 gr.Markdown("Quantified", elem_classes="reco")
                 gr.Markdown(
-                    "⚡ Use the lightest possible model that meets your needs !", elem_classes="reco")
+                    "⚡ Use the lightest possible model that meets your needs !",
+                    elem_classes="reco")
                 gr.Markdown(
-                    """Using the model llama3-8b instead of 13b can lead to a reduction of impact by""", elem_classes="reco")
+                    """Using the model llama3-8b instead of 13b can lead to a reduction of impact by""",
+                    elem_classes="reco")
                 gr.Markdown("## 30%", elem_classes="reco")
 
                 gr.Markdown("Quantified", elem_classes="reco")
                 gr.Markdown(
-                    """🌫️ Locate servers in a country where energy production has less impact""", elem_classes="reco")
+                    """🌫️ Locate servers in a country where energy production has less impact""",
+                    elem_classes="reco")
                 gr.Markdown(
                     """Using a server located in Sweden instead of United-States can lead
                     to a reduction of impact by""", elem_classes="reco")
@@ -355,7 +381,8 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                     """🌫️⛏️💧 Use as few resources as possible
                     (i.e. the smallest possible machine/server) to suit the need""", elem_classes="reco")
                 gr.Markdown(
-                    """Using a small gpu server instead of a big one can lead to a reduction of impact by""", elem_classes="reco")
+                    """Using a small gpu server instead of a big one can lead to a reduction of impact by""",
+                    elem_classes="reco")
                 gr.Markdown("## 41%", elem_classes="reco")
 
                 gr.Markdown("Calculated", elem_classes="reco")
@@ -364,46 +391,32 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                 more_frugal_conf = gr.Markdown(elem_classes="reco")
                 percentage_reduction = gr.Markdown(elem_classes="reco")
 
-            launch_btn.click(fn=handle_launch,
-                             inputs=[mode, project_duration, project_duration, model_details, parameters_count,
-                                     framework, quantization, stages, inference_users,
-                                     inference_requests, inference_tokens, finetuning_data_size,
-                                     finetuning_epochs_number, finetuning_batch_size,
-                                     finetuning_peft, infra_type,
-                                     infra_cpu_cores, infra_gpu_count, infra_gpu_memory,
-                                     infra_memory, infra_pue_datacenter, infra_pue_machine,
-                                     location],
-                             outputs=[tabs, results, results_title,
-                                      energy_consumption, carbon_footprint,
-                                      abiotic_resource_usage, water_usage,
-                                      eq_energy_consumption, eq_carbon_footprint,
-                                      eq_abiotic_resources, eq_water_usage,
-                                      carbon_footprint_chart, abiotic_resource_chart,
-                                      water_usage_chart,
-                                      more_frugal_conf,
-                                      percentage_reduction,
-                                      duration_slider
-                                      ])
-            duration_slider.change(fn=handle_launch,
-                                   inputs=[mode, project_duration, duration_slider, model_details, parameters_count,
-                                           framework, quantization, stages, inference_users,
-                                           inference_requests, inference_tokens, finetuning_data_size,
-                                           finetuning_epochs_number, finetuning_batch_size,
-                                           finetuning_peft, infra_type,
-                                           infra_cpu_cores, infra_gpu_count, infra_gpu_memory,
-                                           infra_memory, infra_pue_datacenter, infra_pue_machine,
-                                           location],
-                                   outputs=[tabs, results, results_title,
-                                            energy_consumption, carbon_footprint,
-                                            abiotic_resource_usage, water_usage,
-                                            eq_energy_consumption, eq_carbon_footprint,
-                                            eq_abiotic_resources, eq_water_usage,
-                                            carbon_footprint_chart, abiotic_resource_chart,
-                                            water_usage_chart,
-                                            more_frugal_conf,
-                                            percentage_reduction,
-                                            duration_slider
-                                            ])
+            launch_btn.click(
+                fn=handle_launch,
+                inputs=[mode, project_duration, project_duration, model_details, parameters_count,
+                        framework, quantization, stages, inference_users, inference_requests,
+                        inference_tokens, finetuning_data_size, finetuning_epochs_number,
+                        finetuning_batch_size, finetuning_peft, infra_type, infra_cpu_cores,
+                        infra_gpu_count, infra_gpu_memory, infra_memory, infra_pue_datacenter,
+                        infra_pue_machine, location],
+                outputs=[tabs, results, results_title, energy_consumption, carbon_footprint,
+                         abiotic_resource_usage, water_usage, eq_energy_consumption,
+                         eq_carbon_footprint, eq_abiotic_resources, eq_water_usage,
+                         carbon_footprint_chart, abiotic_resource_chart, water_usage_chart,
+                         more_frugal_conf, percentage_reduction, duration_slider])
+            duration_slider.change(
+                fn=handle_launch,
+                inputs=[mode, project_duration, duration_slider, model_details, parameters_count,
+                        framework, quantization, stages, inference_users, inference_requests,
+                        inference_tokens, finetuning_data_size, finetuning_epochs_number,
+                        finetuning_batch_size, finetuning_peft, infra_type, infra_cpu_cores,
+                        infra_gpu_count, infra_gpu_memory, infra_memory, infra_pue_datacenter,
+                        infra_pue_machine, location],
+                outputs=[tabs, results, results_title, energy_consumption, carbon_footprint,
+                         abiotic_resource_usage, water_usage, eq_energy_consumption,
+                         eq_carbon_footprint, eq_abiotic_resources, eq_water_usage,
+                         carbon_footprint_chart, abiotic_resource_chart, water_usage_chart,
+                         more_frugal_conf, percentage_reduction, duration_slider])
 
         # Onglet de la documentation
         with gr.Tab("📗 Documentation", id=2) as documentation:

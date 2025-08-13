@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 class Recommendation(BaseModel):
     """
-    Recommandations personalisées sur comment s'améliorer, en fonction des données d'entrées 
+    Recommandations personalisées sur comment s'améliorer, en fonction des données d'entrées
     """
     type: str = Field(...,
                       description="Type de recommandation: General ou Specific")

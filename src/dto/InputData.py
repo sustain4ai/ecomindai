@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 
 @dataclass
@@ -12,7 +13,7 @@ class InputData:
     parameters_count: str
     framework: str
     quantization: str
-    stages: str
+    stages: List[str]
     inference_users: int
     inference_requests: int
     inference_tokens: int

@@ -8,6 +8,9 @@ inputParametersLLMFile = pd.read_csv(
 
 
 def fetch_llm_model_configs() -> List[LLMModelConfig]:
+    """
+    Récupère les configurations de LLM dont on est capables d'estimer les impacts
+    """
     llm_configs = []
     for _, row in inputParametersLLMFile.iterrows():
         llm_configs.append(LLMModelConfig(modelName=row.model, nbParameters=row.parameters,
@@ -16,4 +19,7 @@ def fetch_llm_model_configs() -> List[LLMModelConfig]:
 
 
 def fetch_ai_types() -> List[str]:
+    """
+    Récupère les types d'IA dont on est capables d'estimer les impacts
+    """
     return AI_TYPES
