@@ -24,7 +24,7 @@ def handle_launch(
     best_config = result.more_frugal_conf.split(",")
     return (gr.Tabs(selected=1), gr.update(visible=True),
             gr.update(value="## 📊 Results for " +
-                      str(duration_slider)+" years"),
+                      str(duration_slider) + " years"),
             result.energy_consumption,
             result.carbon_footprint,
             result.abiotic_resource_usage,
@@ -41,7 +41,7 @@ def handle_launch(
             result.abiotic_resource_chart,
             result.water_usage_chart,
             gr.update(value="Compare with the most frugal configuration: the model " +
-                      best_config[0]+" with " + best_config[1]+" framework"),
+                      best_config[0] + " with " + best_config[1] + " framework"),
             result.percentage_reduction,
             gr.update(value=min(project_duration, duration_slider),
                       maximum=project_duration)

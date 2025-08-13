@@ -5,7 +5,8 @@ from src.dto.Recommendation import Recommendation
 
 class OutputEstimation(BaseModel):
     """
-    Données de sortie du calcul d'estimation de l'impact : electricité consommée, temps + recommandations
+    Données de sortie du calcul d'estimation de l'impact : electricité consommée,
+    temps et recommandations
     """
     electricityConsumption: float = Field(...,
                                           description="Consommation électrique totale (Wh)")

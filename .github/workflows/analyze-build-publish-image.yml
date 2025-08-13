@@ -30,6 +30,12 @@ jobs:
                   # Sauvegarde toutes les couches générées pendant le build dans le cache GitHub Actions pour les réutilisations futures
                   cache-to: type=gha,mode=max
 
+            - name: Check Code Formatting
+              run: |
+                  pip install autopep8
+                  autopep8 --diff --recursive --max-line-length 100 src/
+              continue-on-error: true
+
             - name: Run Linter
               run: |
                   pip install pylint
@@ -40,12 +46,6 @@ jobs:
               run: |
                   pip install pip-audit
                   pip-audit
-              continue-on-error: true
-
-            - name: Check Code Formatting
-              run: |
-                  pip install black
-                  black --check src/
               continue-on-error: true
 
     # Job to publish the image (only when pushing to main)

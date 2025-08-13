@@ -40,7 +40,8 @@ def humanize_units(value, units):
     """
     factor = 1000
     # lors des calculs, les valeurs sont dans leur unité par défaut (kWh, kg ou L),
-    # on les remet dans la plus petite unité pour vérifier l'unité la plus adaptée
+    # on les remet dans la plus petite unité pour vérifier l'unité la plus
+    # adaptée
     value = value * factor
     unit_index = 0
 

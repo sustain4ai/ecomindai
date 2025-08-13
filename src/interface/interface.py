@@ -88,7 +88,8 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                 model_details.change(handle_model_details, inputs=model_details,
                                      outputs=[parameters_count, framework, quantization])
 
-                def handle_parameters_count(selected_model, selected_parameters):
+                def handle_parameters_count(
+                        selected_model, selected_parameters):
                     filtered_df = dataframe[(dataframe["model"] == selected_model) &
                                             (dataframe["parameters"] == selected_parameters)]
                     return (
@@ -104,7 +105,8 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                                                 parameters_count],
                                         outputs=[framework, quantization])
 
-                def handle_framework(selected_model, selected_parameters, selected_framework):
+                def handle_framework(
+                        selected_model, selected_parameters, selected_framework):
                     filtered_df = dataframe[(dataframe["model"] == selected_model) &
                                             (dataframe["parameters"] == selected_parameters) &
                                             (dataframe["framework"] == selected_framework)]
@@ -211,14 +213,14 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                     """
                     Calcul du nombre total de tokens générés sur la durée du projet
                     """
-                    total = project_duration*inference_users * \
-                        inference_requests*inference_tokens
+                    total = project_duration * inference_users * \
+                        inference_requests * inference_tokens
                     if total > 1000000000:
-                        total_str = str(round(total/1000000000, 3))+"G"
+                        total_str = str(round(total / 1000000000, 3)) + "G"
                     elif total > 1000000:
-                        total_str = str(round(total/1000000, 3))+"M"
+                        total_str = str(round(total / 1000000, 3)) + "M"
                     elif total > 1000:
-                        total_str = str(round(total/1000, 3))+"k"
+                        total_str = str(round(total / 1000, 3)) + "k"
                     else:
                         total_str = str(total)
                     return gr.update(value=total_str)

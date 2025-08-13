@@ -41,7 +41,8 @@ def list_ai_types() -> List[str]:
 
 def list_llm_model_configs():
     """
-    Liste toutes les configurations de llm qui sont disponibles (modèle, nb paramètres, framework & quantization)
+    Liste toutes les configurations de llm qui sont disponibles (modèle, nb paramètres, framework
+    & quantization)
     """
     return fetch_llm_model_configs()
 
@@ -49,7 +50,8 @@ def list_llm_model_configs():
 def launch_estimation_llm_inference(
         input_estimation: InputEstimationLLMInference) -> OutputEstimation:
     """
-    Récupère les paramètres d'entrée pour créer le bon objet et lancer le calcul de l'impact environnemental pour la partie inférence d'un LLM
+    Récupère les paramètres d'entrée pour créer le bon objet et lancer le calcul de l'impact
+    environnemental pour la partie inférence d'un LLM
     """
 
     input_parameters = InputData(
@@ -67,7 +69,8 @@ def launch_estimation_llm_inference(
         recommendations=results.recommendations)
 
 
-def calculate_impact_llm(input_data: InputData) -> tuple[ResultData, OutputEstimation]:
+def calculate_impact_llm(
+        input_data: InputData) -> tuple[ResultData, OutputEstimation]:
     """
     Calcule et retourne le résultat de l'impact environnemental à partir des paramètres fournis.
     """
@@ -102,7 +105,8 @@ def calculate_impact_llm(input_data: InputData) -> tuple[ResultData, OutputEstim
     usage_impact_list = compute_usage_impact(total_energy_consumption,
                                              input_data.location)
 
-    # Calcul des indicateurs de la configuration pour la meilleure configuration existante
+    # Calcul des indicateurs de la configuration pour la meilleure
+    # configuration existante
     best_configuration = find_best_configuration()
 
     coef_best_configuration = best_configuration.iloc[0]["slope_origin"]
@@ -118,7 +122,8 @@ def calculate_impact_llm(input_data: InputData) -> tuple[ResultData, OutputEstim
         water_usage=str(humanize_volume_units(
             embodied_impact_list[2] + usage_impact_list[2])),
 
-        # Renvoie les équivalences des indicateurs de la configuration sélectionnée
+        # Renvoie les équivalences des indicateurs de la configuration
+        # sélectionnée
         eq_energy_consumption=compute_equivalent(
             total_energy_consumption, "energy"),
         eq_carbon_footprint=compute_equivalent(embodied_impact_list[0] + usage_impact_list[0],
@@ -145,19 +150,20 @@ def calculate_impact_llm(input_data: InputData) -> tuple[ResultData, OutputEstim
         str(best_configuration.iloc[0]["framework"]) + "," +
         str(best_configuration.iloc[0]["quantization"]),
         percentage_reduction="## " +
-        str(100-round(coef_best_configuration/coef_selected_config*100))+"%"
+        str(100 - round(coef_best_configuration / coef_selected_config * 100)) + "%"
     )
 
     # get static recommendations from database
     reco = get_recommendations()
-    # set the right description and expected reduction percentage for the last recommandation of the list which specific & dynamic
+    # set the right description and expected reduction percentage for the last
+    # recommandation of the list which specific & dynamic
     more_frugal_str = "Compare with the most frugal configuration: model=" + str(
         best_configuration.iloc[0]["model"]) + "-" + str(
         best_configuration.iloc[0]["parameters"]) + ", framework=" + str(
         best_configuration.iloc[0]["framework"]) + ", & quantization=" + str(
         best_configuration.iloc[0]["quantization"])
-    p_reduction = str(100-round(coef_best_configuration /
-                      coef_selected_config*100))+"%"
+    p_reduction = str(100 - round(coef_best_configuration /
+                      coef_selected_config * 100)) + "%"
     reco[len(reco) - 1].example = more_frugal_str
     reco[len(reco) - 1].expectedReduction = p_reduction
 
@@ -219,8 +225,10 @@ def compute_energy_consumption_by_stages(stages, coef, inference_total_tokens):
     """
     Calcule la consommation énergétique de la configuration pour une étape donnée
 
-    :param stages: l'étape du cycle de vie du système d'IA pour laquelle on veut faire les estimations
-    :param coef: le coefficient à appliquer pour transformer le nombre de tokens générés en énergie consommée
+    :param stages: l'étape du cycle de vie du système d'IA pour laquelle on veut faire les
+    estimations
+    :param coef: le coefficient à appliquer pour transformer le nombre de tokens générés en
+    énergie consommée
     :param inference_total_tokens: nombre total de tokens générés pendant toutes les inférences
     :return: l'énergie consommée par la configuration (en Wh)
     """
@@ -287,7 +295,8 @@ def compute_embodied_impact(runtime, infrastructure_type):
     try:
         climate_change_impact_df = dataframe[(
             dataframe["criteria"] == "Climate change")]
-        # Multiplication par 1000 pour avoir les valeurs en grammes au lieu de kg
+        # Multiplication par 1000 pour avoir les valeurs en grammes au lieu de
+        # kg
         climate_change_impact = (float(climate_change_impact_df.iloc[0]["value"]) * runtime /
                                  float(climate_change_impact_df.iloc[0]["hours_life_time"]))
     except Exception as exc:
@@ -296,7 +305,8 @@ def compute_embodied_impact(runtime, infrastructure_type):
     try:
         resource_use_impact_df = dataframe[(
             dataframe["criteria"] == "Resource use")]
-        # Multiplication par 1000 pour avoir les valeurs en grammes au lieu de kg
+        # Multiplication par 1000 pour avoir les valeurs en grammes au lieu de
+        # kg
         resource_use_impact = (float(resource_use_impact_df.iloc[0]["value"]) * runtime /
                                float(resource_use_impact_df.iloc[0]["hours_life_time"]))
     except Exception as exc:
@@ -319,10 +329,12 @@ def search_embodied_impact(infrastructure_type):
     :param infrastructure_type: type d'infrastructure dont on souhaite récupérer les impacts
     :return: les impacts inhérents à l'infrastructure
     """
-    return embodied_impacts[(embodied_impacts["infrastructure_type"] == infrastructure_type)]
+    return embodied_impacts[(
+        embodied_impacts["infrastructure_type"] == infrastructure_type)]
 
 
-def compute_total_energy_consumption(energy_consumption, datacenter_pue, infra_machine_pue):
+def compute_total_energy_consumption(
+        energy_consumption, datacenter_pue, infra_machine_pue):
     """
     Calcule l'énergie totale consommée par une configuration pour son type d'infrastructure
 
@@ -349,21 +361,29 @@ def compute_usage_impact(total_energy_consumption, location):
     try:
         climate_change_impact_df = dataframe[(
             dataframe["criteria"] == "Climate change")]
-        # Multiplication par 1000 pour avoir les valeurs en grammes au lieu de kg
+        # Multiplication par 1000 pour avoir les valeurs en grammes au lieu de
+        # kg
         climate_change_impact = (total_energy_consumption *
                                  float(climate_change_impact_df.iloc[0]["value"]))
     except (IndexError, KeyError, ValueError) as exc:
-        print(str(location) + " usedClimateChangeImpact introuvable: " + str(exc))
+        print(
+            str(location) +
+            " usedClimateChangeImpact introuvable: " +
+            str(exc))
         climate_change_impact = 0
 
     try:
         resource_use_impact_df = dataframe[(
             dataframe["criteria"] == "Resource use")]
-        # Multiplication par 1000 pour avoir les valeurs en grammes au lieu de kg
+        # Multiplication par 1000 pour avoir les valeurs en grammes au lieu de
+        # kg
         resource_use_impact = (total_energy_consumption *
                                float(resource_use_impact_df.iloc[0]["value"]))
     except (IndexError, KeyError, ValueError) as exc:
-        print(str(location) + " usedResourceUseImpact introuvable: " + str(exc))
+        print(
+            str(location) +
+            " usedResourceUseImpact introuvable: " +
+            str(exc))
         resource_use_impact = 0
 
     try:
@@ -395,8 +415,10 @@ def compute_equivalent(value, criteria):
     :param criteria: type d'indicateur dont on souhaite calculer l'équivalence
     :return: concaténation de l'unité et de la valeur de l'équivalence de l'indicateur
     """
-    # lors des calculs, les valeurs sont dans leur unité par défaut (kWh, kg ou L), on les remet ici dans la plus petite unité pour vérifier l'unité la plus adaptée parmis les correspondances
-    value = value*1000
+    # lors des calculs, les valeurs sont dans leur unité par défaut (kWh, kg
+    # ou L), on les remet ici dans la plus petite unité pour vérifier l'unité
+    # la plus adaptée parmis les correspondances
+    value = value * 1000
     try:
         filtered_df = equivalents[(equivalents["criteria"] == criteria) &
                                   (equivalents["quantity"] < value)]
@@ -431,4 +453,5 @@ def find_best_configuration():
     :return: la configuration ayant le plus petit coefficient
     """
 
-    return param_conf_llm[(param_conf_llm["slope_origin"] == param_conf_llm["slope_origin"].min())]
+    return param_conf_llm[(param_conf_llm["slope_origin"]
+                           == param_conf_llm["slope_origin"].min())]

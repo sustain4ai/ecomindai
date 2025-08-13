@@ -5,7 +5,8 @@ from src.dto.InputEstimationLLMInference import InputEstimationLLMInference
 from src.dto.InputEstimationML import InputEstimationML
 from src.dto.OutputEstimation import OutputEstimation
 from src.dto.MLType import MLType
-from src.services.serviceLLM.calculation import list_ai_types, launch_estimation_llm_inference, list_llm_model_configs
+from src.services.serviceLLM.calculation import list_ai_types, launch_estimation_llm_inference
+from src.services.serviceLLM.calculation import list_llm_model_configs
 from typing import List
 
 
@@ -32,22 +33,28 @@ async def get_llm_configurations() -> List[LLMModelConfig]:
 # to change if we choose classification/regression and not ml
 async def get_ml_configurations(ml_type: MLType) -> List[MLModelConfig]:
     """
-    Récupère les algorithmes disponibles pour un modèle d'IA de machine learning classique de regression ou classification
+    Récupère les algorithmes disponibles pour un modèle d'IA de machine learning classique de
+    regression ou classification
     """
     return []
 
 
 @router.post("/estimate_llm_inference")
-async def launchEstimationLlm(input_estimation: InputEstimationLLMInference) -> OutputEstimation:
+async def launchEstimationLlm(
+        input_estimation: InputEstimationLLMInference) -> OutputEstimation:
     """
-    Lance un calcul d'estimation des métriques d'impacts environnementaux d'un projet LLM sur sa phase d'inférence sur 1 an
+    Lance un calcul d'estimation des métriques d'impacts environnementaux d'un projet LLM sur
+    sa phase d'inférence sur 1 an
     """
     return launch_estimation_llm_inference(input_estimation)
 
 
 @router.post("/estimate_ml")
-async def launchEstimationMl(input_estimation: InputEstimationML) -> OutputEstimation:
+async def launchEstimationMl(
+        input_estimation: InputEstimationML) -> OutputEstimation:
     """
-    Lance un calcul d'estimation des métriques d'impacts environnementaux d'un projet ML classique sur 1 an
+    Lance un calcul d'estimation des métriques d'impacts environnementaux d'un projet ML classique
+    sur 1 an
     """
-    return OutputEstimation(electricityConsumption=0.0, runtime=0.0, recommendations=[])
+    return OutputEstimation(electricityConsumption=0.0,
+                            runtime=0.0, recommendations=[])
