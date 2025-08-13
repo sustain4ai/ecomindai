@@ -1,5 +1,9 @@
-import pandas as pd
+"""
+Récupère les inputs sur les modèles dont on veut estimer les impacts
+"""
+
 from typing import List
+import pandas as pd
 from src.dto.LLMModelConfig import LLMModelConfig
 
 AI_TYPES = ["LLM", "classification", "regression"]

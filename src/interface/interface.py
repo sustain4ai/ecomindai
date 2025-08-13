@@ -1,14 +1,14 @@
+"""
+Description of the interface content
+"""
 from os import path
-
 import gradio as gr
 import pandas as pd
 
 from src.services.serviceLLM.doc import load_doc
 from src.interface.handlers import handle_launch
 
-"""
-Description of the interface content
-"""
+
 head_path = path.join(path.dirname(__file__),
                       "../../assets/partials/head.html")
 css_path = path.join(path.dirname(__file__), "../../assets/styles/app.css")
@@ -70,6 +70,10 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                                                value="8bit0")
 
                 def handle_model_details(selected_model):
+                    """
+                    Met à jour les listes déroulantes en fonction du modèle sélectionné par
+                    l'utilisateur
+                    """
                     filtered_df = dataframe[(
                         dataframe["model"] == selected_model)]
                     return (
@@ -90,6 +94,10 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
 
                 def handle_parameters_count(
                         selected_model, selected_parameters):
+                    """
+                    Met à jour les listes déroulantes en fonction du modèle et du nombre de
+                    paramètres associé, sélectionnés par l'utilisateur
+                    """
                     filtered_df = dataframe[(dataframe["model"] == selected_model) &
                                             (dataframe["parameters"] == selected_parameters)]
                     return (
@@ -107,6 +115,10 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
 
                 def handle_framework(
                         selected_model, selected_parameters, selected_framework):
+                    """
+                    Met à jour les listes déroulantes en fonction du modèle, du nombre de
+                    paramètres associé et du framework, sélectionnés par l'utilisateur
+                    """
                     filtered_df = dataframe[(dataframe["model"] == selected_model) &
                                             (dataframe["parameters"] == selected_parameters) &
                                             (dataframe["framework"] == selected_framework)]
@@ -166,6 +178,9 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                                                                "prompt tuning"])
 
                 def show_stages(selected_stages):
+                    """
+                    Gère l'affichage des formulaires en fonction des étapes sélectionnées
+                    """
                     return gr.update(visible="Inference" in selected_stages), gr.update(
                         visible="Finetuning ⚠️" in selected_stages)
 
@@ -209,12 +224,12 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                         "<div class=\"not-implemented\">🏗️ Not implemented yet</div>")
 
                 def handle_inference_total_tokens(
-                        project_duration, inference_users, inference_requests, inference_tokens):
+                        duration, nb_inference_users, nb_inference_requests, nb_inference_tokens):
                     """
                     Calcul du nombre total de tokens générés sur la durée du projet
                     """
-                    total = project_duration * inference_users * \
-                        inference_requests * inference_tokens
+                    total = duration * nb_inference_users * \
+                        nb_inference_requests * nb_inference_tokens
                     if total > 1000000000:
                         total_str = str(round(total / 1000000000, 3)) + "G"
                     elif total > 1000000:
@@ -246,42 +261,41 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                             inference_tokens],
                     outputs=inference_total_tokens_str)
 
-                def handle_infra_type(infra_type):
+                def handle_infra_type(infra_type_name):
                     """
                     Gestion des champs en fonction du type d'infrastructure sélectionné
                     """
-                    if infra_type == "AI Cloud Service":
+                    if infra_type_name == "AI Cloud Service":
                         return gr.update(visible=False), gr.update(
                             visible=True), None, None, None, None, None
-                    elif infra_type == "Desktop":
+                    if infra_type_name == "Desktop":
                         return gr.update(visible=True), gr.update(visible=False), gr.update(
                             value=1.0, interactive=False), gr.update(value=8), gr.update(
                             value=1), gr.update(value=12), gr.update(value=32)
-                    elif infra_type == "Laptop":
+                    if infra_type_name == "Laptop":
                         return gr.update(visible=True), gr.update(visible=False), gr.update(
                             value=1.0, interactive=False), gr.update(value=8), gr.update(
                             value=0), gr.update(value=0), gr.update(value=16)
                     # infratype = "Server"
-                    else:
-                        return gr.update(visible=True), gr.update(visible=False), gr.update(
-                            value=1.5, interactive=True), gr.update(value=30), gr.update(
-                            value=2), gr.update(value=32), gr.update(value=64)
+                    return gr.update(visible=True), gr.update(visible=False), gr.update(
+                        value=1.5, interactive=True), gr.update(value=30), gr.update(
+                        value=2), gr.update(value=32), gr.update(value=64)
 
                 infra_type.change(handle_infra_type, inputs=infra_type,
                                   outputs=[infra_dedicated, infra_service, infra_pue_datacenter,
                                            infra_cpu_cores, infra_gpu_count, infra_gpu_memory,
                                            infra_memory])
 
-                def enable_launch_button(infra_type, mode, selected_stages):
+                def enable_launch_button(infra_type_value, mode_selected, selected_stages):
                     """
                     Permettre d'appuyer sur le bouton uniquement quand les champs nécessaires
                     sont remplis
                     """
-                    if (infra_type != "AI Cloud Service" and mode == "Project's impact" and
+                    if (infra_type_value != "AI Cloud Service" and
+                        mode_selected == "Project's impact" and
                             "Inference" in selected_stages):
                         return gr.update(interactive=True)
-                    else:
-                        return gr.update(interactive=False)
+                    return gr.update(interactive=False)
 
                 infra_type.change(enable_launch_button, inputs=[infra_type, mode, stages],
                                   outputs=launch_btn)

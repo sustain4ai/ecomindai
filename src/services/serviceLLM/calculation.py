@@ -218,6 +218,9 @@ def generate_indicator_summary_fig(criteria, usage_impact, embodied_impact):
 
 def compute_total_number_tokens(nb_users, nb_requests, nb_tokens_one_inference,
                                 project_duration):
+    """
+    Calcule le nombre de tokens total générés sur la durée du projet
+    """
     return nb_users * nb_requests * nb_tokens_one_inference * project_duration
 
 
@@ -238,7 +241,7 @@ def compute_energy_consumption_by_stages(stages, coef, inference_total_tokens):
             return coef * inference_total_tokens
 
         case "Finetuning":
-            raise gr.Warning("Finetuning computation is not handled")
+            raise NotImplementedError("Finetuning computation is not handled")
 
         case _:
             # Default case - return 0.0 if stage is not recognized
