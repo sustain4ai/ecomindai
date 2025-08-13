@@ -6,6 +6,9 @@ import pandas as pd
 from src.services.serviceLLM.doc import load_doc
 from src.interface.handlers import handle_launch
 
+"""
+Description of the interface content
+"""
 head_path = path.join(path.dirname(__file__),
                       "../../assets/partials/head.html")
 css_path = path.join(path.dirname(__file__), "../../assets/styles/app.css")
@@ -140,7 +143,8 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                                 interactive=False, elem_classes="inference")
                 with gr.Column(visible=False, elem_classes="wip") as finetuning_stage:
                     gr.Markdown(
-                        """#### 🏗️ Finetuning WIP: it will not be taken into account in your estimation
+                        """#### 🏗️ Finetuning WIP: it will not be taken into account in your \
+                        estimation
                         We will need more data to factor it into the estimate""")
                     with gr.Row():
                         finetuning_type = gr.Radio(
@@ -160,8 +164,8 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                                                                "prompt tuning"])
 
                 def show_stages(selected_stages):
-                    return gr.update(visible=("Inference" in selected_stages)), gr.update(
-                        visible=("Finetuning ⚠️" in selected_stages))
+                    return gr.update(visible="Inference" in selected_stages), gr.update(
+                        visible="Finetuning ⚠️" in selected_stages)
 
                 stages.change(show_stages, inputs=stages,
                               outputs=[inference_stage, finetuning_stage])
@@ -190,24 +194,30 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                     with gr.Row():
                         infra_pue_datacenter = gr.Number(
                             label="Datacenter PUE", minimum=1, maximum=10, value=1.5, step=0.01,
-                            info="To learn more about the Power Usage Effectiveness and how it is calculated, check this page related to [PUE](https://en.wikipedia.org/wiki/Power_usage_effectiveness).",
+                            info="To learn more about the Power Usage Effectiveness and how it \
+                                is calculated, check this page related to [PUE]\
+                                (https://en.wikipedia.org/wiki/Power_usage_effectiveness).",
                             elem_classes="show-disabled")
                         infra_pue_machine = gr.Number(
                             label="Complementary PUE", minimum=1, maximum=10, value=1.3, step=0.01,
-                            info="Power used for the operating of OS, virtualization, control plan, idle... To learn more about it, visit our documentation page.",)
+                            info="Power used for the operating of OS, virtualization, control plan,\
+                                  idle... To learn more about it, visit our documentation page.",)
                 with gr.Column(visible=False) as infra_service:
                     gr.HTML(
                         "<div class=\"not-implemented\">🏗️ Not implemented yet</div>")
 
                 def handle_inference_total_tokens(
                         project_duration, inference_users, inference_requests, inference_tokens):
+                    """
+                    Calcul du nombre total de tokens générés sur la durée du projet
+                    """
                     total = project_duration*inference_users * \
                         inference_requests*inference_tokens
-                    if (total > 1000000000):
+                    if total > 1000000000:
                         total_str = str(round(total/1000000000, 3))+"G"
-                    elif (total > 1000000):
+                    elif total > 1000000:
                         total_str = str(round(total/1000000, 3))+"M"
-                    elif (total > 1000):
+                    elif total > 1000:
                         total_str = str(round(total/1000, 3))+"k"
                     else:
                         total_str = str(total)
@@ -235,6 +245,9 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                     outputs=inference_total_tokens_str)
 
                 def handle_infra_type(infra_type):
+                    """
+                    Gestion des champs en fonction du type d'infrastructure sélectionné
+                    """
                     if infra_type == "AI Cloud Service":
                         return gr.update(visible=False), gr.update(
                             visible=True), None, None, None, None, None
@@ -257,9 +270,13 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                                            infra_cpu_cores, infra_gpu_count, infra_gpu_memory,
                                            infra_memory])
 
-                # peremttre d'appuyer sur le bouton uniquement quand les champs nécéssaires sont remplis
                 def enable_launch_button(infra_type, mode, selected_stages):
-                    if (infra_type != "AI Cloud Service" and mode == "Project's impact" and "Inference" in selected_stages):
+                    """
+                    Permettre d'appuyer sur le bouton uniquement quand les champs nécessaires
+                    sont remplis
+                    """
+                    if (infra_type != "AI Cloud Service" and mode == "Project's impact" and
+                            "Inference" in selected_stages):
                         return gr.update(interactive=True)
                     else:
                         return gr.update(interactive=False)
@@ -319,7 +336,8 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                     label="Water usage", value="X", elem_classes="result")
 
             gr.Markdown(
-                "\* the water usage is calculated only for the scope 3 because of the lack of open data about the water usage related to energy consumption",
+                "\\* the water usage is calculated only for the scope 3 because of the lack \
+                    of open data about the water usage related to energy consumption",
                 elem_classes="asterisk")
             gr.Markdown(
                 "### Visualize the proportion of use and embodied impacts")
@@ -347,7 +365,8 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                 gr.Markdown("⚡ Use the right quantization !",
                             elem_classes="reco")
                 gr.Markdown(
-                    """On llamacpp, using q4ks instead of no quantization can lead to a reduction of impact by""",
+                    """On llamacpp, using q4ks instead of no quantization can lead to a reduction \
+                        of impact by""",
                     elem_classes="reco")
                 gr.Markdown("## 33%", elem_classes="reco")
 
@@ -363,7 +382,8 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                     "⚡ Use the lightest possible model that meets your needs !",
                     elem_classes="reco")
                 gr.Markdown(
-                    """Using the model llama3-8b instead of 13b can lead to a reduction of impact by""",
+                    """Using the model llama3-8b instead of 13b can lead to a reduction of impact\
+                          by""",
                     elem_classes="reco")
                 gr.Markdown("## 30%", elem_classes="reco")
 
@@ -379,9 +399,11 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                 gr.Markdown("Quantified", elem_classes="reco")
                 gr.Markdown(
                     """🌫️⛏️💧 Use as few resources as possible
-                    (i.e. the smallest possible machine/server) to suit the need""", elem_classes="reco")
+                    (i.e. the smallest possible machine/server) to suit the need""",
+                    elem_classes="reco")
                 gr.Markdown(
-                    """Using a small gpu server instead of a big one can lead to a reduction of impact by""",
+                    """Using a small gpu server instead of a big one can lead to a reduction of \
+                    impact by""",
                     elem_classes="reco")
                 gr.Markdown("## 41%", elem_classes="reco")
 
