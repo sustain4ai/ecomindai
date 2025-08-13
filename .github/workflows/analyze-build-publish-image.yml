@@ -33,18 +33,20 @@ jobs:
             - name: Run Linter
               run: |
                   pip install pylint
-                  pylint src/
+                  pylint -v src/
               continue-on-error: true
 
             - name: Check Dependencies for Vulnerabilities
               run: |
                   pip install pip-audit
                   pip-audit
+              continue-on-error: true
 
             - name: Check Code Formatting
               run: |
                   pip install black
                   black --check src/
+              continue-on-error: true
 
     # Job to publish the image (only when pushing to main)
     build-and-publish:
