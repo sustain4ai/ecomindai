@@ -16,7 +16,7 @@ csv_path = path.join(path.dirname(__file__), "../../assets/data/")
 
 
 # Point d'entrée de l'application
-with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
+with gr.Blocks(title="EcoMindAI", head_paths=head_path, css_paths=css_path,
                analytics_enabled=False) as io:
     title = gr.HTML("""<h1 class=\"logo\">EcoMindAI</h1>
         <p>Estimating the environmental impact of an language model project </p>""")
@@ -212,8 +212,8 @@ with gr.Blocks(title="EcoMindAI v2", head_paths=head_path, css_paths=css_path,
                         infra_pue_datacenter = gr.Number(
                             label="Datacenter PUE", minimum=1, maximum=10, value=1.5, step=0.01,
                             info="To learn more about the Power Usage Effectiveness and how it \
-                                is calculated, check this page related to [PUE]\
-                                (https://en.wikipedia.org/wiki/Power_usage_effectiveness).",
+                                is calculated, check this page related to \
+                                [PUE](https://en.wikipedia.org/wiki/Power_usage_effectiveness).",
                             elem_classes="show-disabled")
                         infra_pue_machine = gr.Number(
                             label="Complementary PUE", minimum=1, maximum=10, value=1.3, step=0.01,
