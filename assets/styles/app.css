@@ -1,0 +1,212 @@
+/* Personnalisation du thème */
+:root, :root .dark {
+  --primary-50: #fef2f2;
+  --primary-100: #fee2e2;
+  --primary-200: #fecaca;
+  --primary-300: #fca5a5;
+  --primary-400: #f87171;
+  --primary-500: #ef4444;
+  --primary-600: #dc2626;
+  --primary-700: #b91c1c;
+  --primary-800: #991b1b;
+  --primary-900: #7f1d1d;
+  --primary-950: #450a0a;
+
+  --neutral-50: #f6f2fa;
+  --neutral-100: #f2eff6;
+  --neutral-200: #e4e1e8;
+  --neutral-300: #d5d2d9;
+  --neutral-400: #bfbcc2;
+  --neutral-500: #78777a;
+  --neutral-600: #5a595c;
+  --neutral-700: #444345;
+  --neutral-800: #282829;
+  --neutral-900: #1c1b1c;
+  --neutral-950: #121112;
+
+  /* Suppression des arrondis */
+  --radius-xxs: 0; /* 1px par défaut */
+  --radius-xs: 0; /* 2px par défaut */
+  --radius-sm: 0; /* 4px par défaut */
+  --radius-md: 0; /* 6px par défaut */
+  --radius-lg: 0; /* 8px par défaut */
+  --radius-xl: 0; /* 12px par défaut */
+  --radius-xxl: 0; /* 22px par défaut */
+
+  /* Suppression des bordures des composants */
+  --block-border-width: 0;
+
+  --font: Lexend, "Segoe UI";
+}
+
+/* Liseré en haut de la page */
+gradio-app {
+  border-top: solid 3px var(--primary-500);
+}
+ 
+/* Changer la couleur de fond grise par défaut */
+div {
+  background : white;
+}
+
+/* Ligne pour séparer les différent blocs */
+hr {
+  border-top: solid 2px var(--neutral-300);
+}
+
+/* Mise en forme des titres secondaires pour mieux les différencier */
+h4, h5, h6 {
+  --body-text-color: var(--neutral-500);
+}
+
+.asterisk {
+  --body-text-color: var(--neutral-500);
+}
+
+/* Bloc affiché lorsqu'une fonctionnalité n'est pas implémentée */
+div.not-implemented {
+  background: var(--border-color-primary);
+  padding: 28px 40px;
+  font-size: var(--text-md);
+}
+
+p.not-implemented {
+  background: var(--border-color-primary);
+  padding: 0px 40px 28px 40px;
+  font-size: var(--text-md);
+}
+
+.not-implemented {
+  border: var(--border-color-primary);
+  font-size: var(--text-md);
+}
+
+.wip {
+  opacity: 0.5;
+}
+
+/* Mise en forme des champs d'entrée désactivés */
+.show-disabled input[disabled] {
+  background: var(--neutral-100);
+}
+
+/* Mise en forme des onglets secondaires avec une couleur différente
+  (pour les différencier de ceux du menu principal) */
+.page .tabs .tab-container {
+  --primary-500: var(--neutral-500);
+  --color-accent: var(--primary-500);
+}
+
+/* Alignement des input pour l'inférence */
+.inference {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.inference label {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+.inference:last-child textarea{
+  background: var(--border-color-primary);
+}
+
+/* Alignement des valeurs de résultat */
+.result:not(:last-child){
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+  border-right-width: 2px !important;
+}
+
+.result label {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.result label > span {
+  display: block;
+  text-align: center;
+}
+
+/* Mise en forme des valeurs de résultat
+  (pour éviter qu'ils ressemblent à des champs de saisie) */
+.result textarea {
+  --input-border-width: 10;
+  --input-text-size: var(--text-xl);
+  text-align: center;
+}
+
+/* Alignement des valeurs de résultat */
+.equiv {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+}
+.equiv p {
+  font-size: 40px;
+  color: #0a9396;
+  margin-top:-15px;
+}
+
+.reco textarea {
+  display: block;
+  --input-border-width: 0;
+  --input-text-size: var(--text-xxl);
+  --input-text-align: center;
+  --input-text-policy: bold;
+}
+.reco textarea {
+  display: block;
+  --input-border-width: 0;
+  --input-text-size: var(--text-xxl);
+  --input-text-align: center;
+  --input-text-policy: bold;
+}
+
+/* Masquage du pied de page Gradio */
+footer {
+  visibility: collapse;
+}
+
+/* Table pour afficher les recommendations */
+.grid-css {
+  text-align: center;
+  justify-content: center;
+  display: grid;
+  grid-template-columns: 200px  auto auto  200px [end];
+  grid-template-rows: 40px auto;
+  overflow: hidden;
+}
+
+.reco {
+  position: relative !important;
+  flex-grow: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+/* Titre et slider sur la durée concernée pour l'affichage des résultats */
+.duration{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* Slider pour choisir la durée pour laquelle on veut visualiser l'impact */
+.slider input:last {
+  width: 100px;
+}
+
