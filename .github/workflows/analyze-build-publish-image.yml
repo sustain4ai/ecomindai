@@ -30,6 +30,9 @@ jobs:
                   # Sauvegarde toutes les couches générées pendant le build dans le cache GitHub Actions pour les réutilisations futures
                   cache-to: type=gha,mode=max
 
+            - name: test
+              run: echo ${{ github.ref_name }}
+
             - name: Check Code Formatting
               run: |
                   pip install autopep8
@@ -108,5 +111,5 @@ jobs:
               run: |
                   docker buildx imagetools create \
                     --tag sustain4raise/ecomindai:latest \
-                    --tag sustain4raise/ecomindai:${{ github.ref }} \
+                    --tag sustain4raise/ecomindai:${{ github.ref_name }} \
                     sustain4raise/ecomindai:main
