@@ -108,5 +108,5 @@ jobs:
               run: |
                   docker buildx imagetools create \
                     --tag sustain4raise/ecomindai:latest \
-                    --tag sustain4raise/ecomindai:${{ github.ref }} \
+                    --tag sustain4raise/ecomindai:${{ github.ref_name }} \
                     sustain4raise/ecomindai:main
