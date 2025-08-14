@@ -1,0 +1,10 @@
+infrastructure_type,criteria,value,hours_life_time,unit,source
+Laptop,Resource use,0.009508764,43800,kg SB eq.,Base Empreinte Numérique v2.0 Ordinateur portable (fab + distri + fin de vie)
+Laptop,Climate change,185.09,43800,kgCO2eq,Base Empreinte Numérique v2.0 Ordinateur portable (fab + distri + fin de vie)
+Laptop,Water use,832.0516,43800,m3 eq.,Base Empreinte Numérique v2.0 Ordinateur portable (fab + distri + fin de vie)
+Desktop,Resource use, 0.019713566,52560,kg SB eq.,Base Empreinte Numérique v2.0 Ordinateur fixe (sans écran) professionnel (fab + distri + fin de vie)
+Desktop,Climate change,211.46,52560,kgCO2eqF,Base Empreinte Numérique v2.0 Ordinateur fixe (sans écran) professionnel (fab + distri + fin de vie)
+Desktop,Water use,92.90602,52560,m3 eq.,Base Empreinte Numérique v2.0 Ordinateur fixe (sans écran) professionnel (fab + distri + fin de vie)
+Server,Resource use,0.05056768,43800,kg SB eq.,Base Empreinte Numérique v2.0 Serveur rack - grand (fab + distri + fin de vie)
+Server,Climate change,5504.8,43800,kgCO2eq,Base Empreinte Numérique v2.0 Serveur rack - grand (fab + distri + fin de vie)
+Server,Water use,2291.31,43800,m3 eq.,Base Empreinte Numérique v2.0 Serveur rack - grand (fab + distri + fin de vie)
