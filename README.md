@@ -53,7 +53,7 @@ docker run -p 8000:8000 sustain4raise/ecomindai:1.0.1
 
 3. Run the application:
    ```bash
-   pipenv run python main.py
+   pipenv run python app.py
    ```
 
 The development server will start at `http://localhost:8000`
