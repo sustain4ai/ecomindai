@@ -1,0 +1,5 @@
+gradio
+referencing
+jsonschema
+requests
+matplotlib

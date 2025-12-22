@@ -1,3 +1,14 @@
+---
+title: EcoMindAI
+emoji: 🚀
+colorFrom: green
+colorTo: blue
+sdk: gradio
+sdk_version: 6.0.0
+app_file: app.py
+pinned: false
+---
+
 # EcoMindAI
 
 Estimate the environmental impact of your AI project and reduce it through recommendations.
@@ -53,7 +64,7 @@ docker run -p 8000:8000 sustain4raise/ecomindai:1.0.1
 
 3. Run the application:
    ```bash
-   pipenv run python main.py
+   pipenv run python app.py
    ```
 
 The development server will start at `http://localhost:8000`

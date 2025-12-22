@@ -19,4 +19,4 @@ RUN pip install pipenv --user && \
 
 EXPOSE ${ECOMINDAI_SERVER_PORT}
 
-CMD ["./.venv/bin/python", "main.py"]
+CMD ["./.venv/bin/python", "app.py"]

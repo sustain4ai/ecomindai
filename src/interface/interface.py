@@ -8,15 +8,11 @@ import pandas as pd
 from src.services.serviceLLM.doc import load_doc
 from src.interface.handlers import handle_launch
 
-
-head_path = path.join(path.dirname(__file__),
-                      "../../assets/partials/head.html")
-css_path = path.join(path.dirname(__file__), "../../assets/styles/app.css")
 csv_path = path.join(path.dirname(__file__), "../../assets/data/")
 
 
 # Point d'entrée de l'application
-with gr.Blocks(title="EcoMindAI", head_paths=head_path, css_paths=css_path,
+with gr.Blocks(title="EcoMindAI",
                analytics_enabled=False) as io:
     title = gr.HTML("""<h1 class=\"logo\">EcoMindAI</h1>
         <p>Estimating the environmental impact of an language model project </p>""")
