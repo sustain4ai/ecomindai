@@ -1,3 +1,14 @@
+---
+title: EcoMindAI Test
+emoji: 🚀
+colorFrom: green
+colorTo: blue
+sdk: gradio
+sdk_version: 6.0.0
+app_file: app.py
+pinned: false
+---
+
 # EcoMindAI
 
 Estimate the environmental impact of your AI project and reduce it through recommendations.
