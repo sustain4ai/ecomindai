@@ -403,10 +403,11 @@ with gr.Blocks(title="EcoMindAI",
                 gr.Markdown(
                     """🌫️ Locate servers in a country where energy production has less impact""",
                     elem_classes="reco")
-                gr.Markdown(
+
+                location_reco_example = gr.Markdown(
                     """Using a server located in Sweden instead of United-States can lead
                     to a reduction of impact by""", elem_classes="reco")
-                gr.Markdown("## 93%", elem_classes="reco")
+                location_reco_reduction = gr.Markdown("## 93%", elem_classes="reco")
 
                 gr.Markdown("Quantified", elem_classes="reco")
                 gr.Markdown(
@@ -437,7 +438,9 @@ with gr.Blocks(title="EcoMindAI",
                          abiotic_resource_usage, water_usage, eq_energy_consumption,
                          eq_carbon_footprint, eq_abiotic_resources, eq_water_usage,
                          carbon_footprint_chart, abiotic_resource_chart, water_usage_chart,
-                         more_frugal_conf, percentage_reduction, duration_slider])
+                         location_reco_example, location_reco_reduction, #reco localisation
+                         more_frugal_conf, percentage_reduction, #reco config frugale
+                         duration_slider])
             duration_slider.change(
                 fn=handle_launch,
                 inputs=[mode, project_duration, duration_slider, model_details, parameters_count,
@@ -450,7 +453,9 @@ with gr.Blocks(title="EcoMindAI",
                          abiotic_resource_usage, water_usage, eq_energy_consumption,
                          eq_carbon_footprint, eq_abiotic_resources, eq_water_usage,
                          carbon_footprint_chart, abiotic_resource_chart, water_usage_chart,
-                         more_frugal_conf, percentage_reduction, duration_slider])
+                         location_reco_example, location_reco_reduction, #reco localisation
+                         more_frugal_conf, percentage_reduction, #reco configuration frugale
+                         duration_slider])
 
         # Onglet de la documentation
         with gr.Tab("📗 Documentation", id=2) as documentation:

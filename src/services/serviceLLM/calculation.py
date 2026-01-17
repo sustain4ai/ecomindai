@@ -149,12 +149,15 @@ def calculate_impact_llm(
         str(best_configuration.iloc[0]["parameters"]) + "," +
         str(best_configuration.iloc[0]["framework"]) + "," +
         str(best_configuration.iloc[0]["quantization"]),
-        percentage_reduction="## " +
-        str(100 - round(coef_best_configuration / coef_selected_config * 100)) + "%"
+        percentage_reduction="## " + str(100 - round(coef_best_configuration / coef_selected_config * 100)) + "%"
     )
+
+
 
     # get static recommendations from database
     reco = get_recommendations()
+
+    reco = dynamiser_reco_serveur(input_data.location, reco)
     # set the right description and expected reduction percentage for the last
     # recommandation of the list which specific & dynamic
     more_frugal_str = "Compare with the most frugal configuration: model=" + str(
@@ -458,3 +461,51 @@ def find_best_configuration():
 
     return param_conf_llm[(param_conf_llm["slope_origin"]
                            == param_conf_llm["slope_origin"].min())]
+
+
+def dynamiser_reco_serveur(input_country, reco):
+    """
+    Calcule la réduction d'impact qui serait impactée par le changement de la localisation du serveur en Suède
+    """
+    # chargement des impacts par pays (fitlrage par climate change)
+    df_cc = mixelecs[mixelecs["criteria"]=="Climate change"].copy()
+
+    # s'assurer que location est bien une string
+    df_cc["location"] = df_cc["location"].astype(str)
+    input_country_str = str(input_country).strip()
+
+    # impact du pays de l'utilisateur
+    match_rows = df_cc[df_cc["location"] == input_country_str]
+
+    if match_rows.empty:
+        # aucun impact trouvé --> pard défaut 0
+        impact_current = 0.0
+    else:
+        impact_current = float(match_rows["value"].iloc[0])
+
+    # on utilise la Suède commen référence
+    #best_country_row = df_cc.loc[df_cc["value"].idxmin()] # pour trouver le meilleur pays avec la plus faible valeur
+    best_country = "Sweden"
+    best_country_row = df_cc[df_cc["location"] == best_country]
+    impact_best = float(best_country_row["value"])
+
+
+    # pourcentage de reduction
+    if impact_current > 0:
+        percentage_reduction = round((impact_current-impact_best)/impact_current *100)
+    else:
+        percentage_reduction = 0
+
+    # texte dynamique 
+    texte_dynamique = f"Using a server located in {best_country} instead of {input_country_str} can lead to a reduction of impact by"
+
+    # identifier la reco à mettre à jour
+    for r in reco:
+        if "Locate servers in a country" in r.topic:
+            r.example = texte_dynamique
+            r.expectedReduction = f"{percentage_reduction}%"
+            break
+    
+    return reco
+
+
