@@ -373,14 +373,11 @@ with gr.Blocks(title="EcoMindAI",
                 gr.Markdown("### Expected reduction",
                             elem_classes="reco")
 
-                gr.Markdown("Quantified", elem_classes="reco")
+                gr.Markdown("Calculated", elem_classes="reco")
                 gr.Markdown("⚡ Use the right quantization !",
                             elem_classes="reco")
-                gr.Markdown(
-                    """On llamacpp, using q4ks instead of no quantization can lead to a reduction \
-                        of impact by""",
-                    elem_classes="reco")
-                gr.Markdown("## 33%", elem_classes="reco")
+                quantization_gain = gr.Markdown(elem_classes="reco")
+                quantization_example = gr.Markdown(elem_classes="reco")
 
                 gr.Markdown("Quantified", elem_classes="reco")
                 gr.Markdown("⚡ Use the right framework !", elem_classes="reco")
@@ -437,7 +434,8 @@ with gr.Blocks(title="EcoMindAI",
                          abiotic_resource_usage, water_usage, eq_energy_consumption,
                          eq_carbon_footprint, eq_abiotic_resources, eq_water_usage,
                          carbon_footprint_chart, abiotic_resource_chart, water_usage_chart,
-                         more_frugal_conf, percentage_reduction, duration_slider])
+                         more_frugal_conf, percentage_reduction, duration_slider,quantization_example,
+                         quantization_gain])
             duration_slider.change(
                 fn=handle_launch,
                 inputs=[mode, project_duration, duration_slider, model_details, parameters_count,
@@ -450,7 +448,8 @@ with gr.Blocks(title="EcoMindAI",
                          abiotic_resource_usage, water_usage, eq_energy_consumption,
                          eq_carbon_footprint, eq_abiotic_resources, eq_water_usage,
                          carbon_footprint_chart, abiotic_resource_chart, water_usage_chart,
-                         more_frugal_conf, percentage_reduction, duration_slider])
+                         more_frugal_conf, percentage_reduction, duration_slider,quantization_example,
+                         quantization_gain])
 
         # Onglet de la documentation
         with gr.Tab("📗 Documentation", id=2) as documentation:
