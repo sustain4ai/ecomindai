@@ -110,7 +110,56 @@ def calculate_impact_llm(
     best_configuration = find_best_configuration()
 
     coef_best_configuration = best_configuration.iloc[0]["slope_origin"]
+    
+    # calcul dynamique du gain lié à la quantization
+    best_quant = find_best_quantization(
+    input_data.model_details,
+    input_data.parameters_count,
+    input_data.framework)
+    # Coefficient énergétique (slope_origin) de la meilleure quantization disponible
+    # pour ce modèle / nombre de paramètres / framework.
+    coef_best_quant = best_quant["slope_origin"]
+    # Calcul du gain de la quantization en pourcentage :
+    # on compare la consommation par token de la configuration sélectionnée
+    # avec celle de la meilleure quantization trouvée.
+    # Le résultat représente la réduction d'impact permise par la quantization optimale.
+    quant_gain= "## " +str(100 - round(
+        coef_best_quant / coef_selected_config * 100))+"%"
+    
+    # Quantizations disponibles pour ce modèle / params / framework
+    available_quants = param_conf_llm[
+    (param_conf_llm["model"] == input_data.model_details) &
+    (param_conf_llm["parameters"] == input_data.parameters_count) &
+    (param_conf_llm["framework"] == input_data.framework)
+    ]["quantization"].unique()
+    
+    # Normalisation de la quantization de référence pour l'affichage
+    baseline_quant = (
+        "no quantization"
+        if input_data.quantization == "none"
+        else input_data.quantization
+    )
+    
+    #Construction du message de recommandation 
+    if len(available_quants) <= 1:
+        # Cas 1 — aucune alternative possible
+        quantization_example = (
+            f"On {input_data.framework}, there is no quantization available "
+            f"for {input_data.model_details}-{input_data.parameters_count}"
+        )
 
+    elif best_quant["quantization"] == input_data.quantization:
+        # Cas 2 — configuration déjà optimale
+        quantization_example = "Already using the best quantization"
+
+    else:
+        # Cas 3 — amélioration possible
+        quantization_example = (
+            f"On {input_data.framework}, using {best_quant['quantization']} "
+            f"instead of {baseline_quant} for "
+            f"{input_data.model_details}-{input_data.parameters_count} "
+            f"can lead to a reduction of impact by"
+        )
     result_data = ResultData(
         # Renvoie les indicateurs de la configuration sélectionnée
         energy_consumption=str(
@@ -150,7 +199,9 @@ def calculate_impact_llm(
         str(best_configuration.iloc[0]["framework"]) + "," +
         str(best_configuration.iloc[0]["quantization"]),
         percentage_reduction="## " +
-        str(100 - round(coef_best_configuration / coef_selected_config * 100)) + "%"
+        str(100 - round(coef_best_configuration / coef_selected_config * 100)) + "%",
+        quantization_example= quantization_example,
+        quantization_gain= quant_gain
     )
 
     # get static recommendations from database
@@ -166,6 +217,9 @@ def calculate_impact_llm(
                       coef_selected_config * 100)) + "%"
     reco[len(reco) - 1].example = more_frugal_str
     reco[len(reco) - 1].expectedReduction = p_reduction
+    
+    reco[0].expectedReduction = quant_gain 
+    reco[0].example = quantization_example 
 
     output_estimation = OutputEstimation(
         electricityConsumption=conf_energy_consumption
@@ -458,3 +512,16 @@ def find_best_configuration():
 
     return param_conf_llm[(param_conf_llm["slope_origin"]
                            == param_conf_llm["slope_origin"].min())]
+    
+def find_best_quantization(model, parameters, framework):
+    """"
+    Recherche de la quantization la plus frugale (impact énergétique minimal)
+    pour un modèle, un nombre de paramètres et un framework donnés.
+    La meilleure quantization est celle ayant le slope_origin le plus faible.
+    """
+    df = param_conf_llm[
+        (param_conf_llm["model"] == model) &
+        (param_conf_llm["parameters"] == parameters) &
+        (param_conf_llm["framework"] == framework)
+    ]
+    return df.loc[df["slope_origin"].idxmin()]

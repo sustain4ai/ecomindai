@@ -20,7 +20,7 @@ def handle_launch(
                                  infra_type, infra_cpu_cores, infra_gpu_count, infra_gpu_memory,
                                  infra_memory, infra_pue_datacenter, infra_pue_machine, location)
 
-    result, _ = calculate_impact_llm(input_parameters)
+    result, outputEstimation = calculate_impact_llm(input_parameters)
     best_config = result.more_frugal_conf.split(",")
     return (gr.Tabs(selected=1), gr.update(visible=True),
             gr.update(value="## 📊 Results for " +
@@ -44,5 +44,7 @@ def handle_launch(
                       best_config[0] + " with " + best_config[1] + " framework"),
             result.percentage_reduction,
             gr.update(value=min(project_duration, duration_slider),
-                      maximum=project_duration)
+                      maximum=project_duration),
+            gr.update(value=outputEstimation.recommendations[0].expectedReduction),
+            gr.update(value = outputEstimation.recommendations[0].example)
             )

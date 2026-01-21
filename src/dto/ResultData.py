@@ -20,3 +20,5 @@ class ResultData:
     water_usage_chart: Figure
     more_frugal_conf: str
     percentage_reduction: str
+    quantization_example:str
+    quantization_gain:str
