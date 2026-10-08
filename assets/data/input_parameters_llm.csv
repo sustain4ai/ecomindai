@@ -37,3 +37,6 @@ pleias,3b,none,vllm,9.30737E-07
 pleias,3b,none,pytorch,1.43136E-06
 pleias,350m,none,vllm,2.30133E-07
 pleias,350m,none,pytorch,1.11277E-06
+mistral-small3.2,24b,fp8,vllm,1.86297E-06
+qwen3-next,80b,nvfp4,vllm,7.74712E-07
+qwen3.5,122b,nvfp4,vllm,1.49075E-06
